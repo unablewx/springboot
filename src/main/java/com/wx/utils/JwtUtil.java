@@ -8,6 +8,7 @@ import com.auth0.jwt.interfaces.DecodedJWT;
 import com.google.common.base.Preconditions;
 import com.wx.auth.AuthInfo;
 import com.wx.constant.Constant;
+import com.wx.exception.CrmAuthException;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -19,6 +20,8 @@ import java.util.Map;
  * @Version 1.0
  */
 public class JwtUtil {
+    private JwtUtil() {
+    }
 
     /**
      * 生成Token
@@ -56,7 +59,7 @@ public class JwtUtil {
      * @param secret
      * @return
      */
-    public static AuthInfo verifyToken(String token, String secret) {
+    public static AuthInfo verifyToken(String token, String secret) throws CrmAuthException {
         JWTVerifier jwtVerifier = null;
         DecodedJWT jwt = null;
         //创建验证器
@@ -65,8 +68,7 @@ public class JwtUtil {
         try {
             jwt = jwtVerifier.verify(token);
         } catch (JWTVerificationException e) {
-            // todo 统一异常处理
-            throw new RuntimeException("凭证已过期，请重新登录");
+            throw new CrmAuthException("凭证已过期，请重新登录");
         }
         //返回AuthInfo对象
         return new AuthInfo().

@@ -27,7 +27,6 @@ import java.util.Set;
  */
 @Slf4j
 public class AuthFilter implements Filter {
-    //    private Authenticator authenticator;
     private AuthenticatorImpl authenticatorImpl;
     private AuthenticatorRedisImpl authenticatorRedis;
     private Set<String> uriFilter;

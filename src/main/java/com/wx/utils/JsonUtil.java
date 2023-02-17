@@ -9,6 +9,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
  * @Version 1.0
  */
 public class JsonUtil {
+
+    private JsonUtil() {
+    }
+
     public static ObjectMapper mapper = new ObjectMapper();
 
 
@@ -31,15 +35,15 @@ public class JsonUtil {
     /**
      * 将字符串转换成对象
      *
-     * @param json 需要转换的json字符串
+     * @param jsons   需要转换的json字符串
      * @param tClass 需要返回的类字节码
-     * @param <T> 指定的类
+     * @param <T>    指定的类
      * @return 指定的类生成的对象
      */
-    public static <T> T jsonToObject(String json, Class<T> tClass) {
+    public static <T> T jsonToObject(String jsons, Class<T> tClass) {
         T t = null;
         try {
-            t = mapper.readValue(json, tClass);
+            t = mapper.readValue(jsons, tClass);
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }

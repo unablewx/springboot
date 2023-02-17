@@ -12,7 +12,6 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Conditional;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.core.RedisTemplate;
 
@@ -43,7 +42,6 @@ public class AuthConfig {
         } else {
             authFilter = new AuthFilter(authenticator());
         }
-//        AuthFilter authFilter = new AuthFilter(authenticator());
         //将自己构造的过滤器放到 FilterRegistrationBean中
         filterRegistrationBean.setFilter(authFilter);
         //添加过滤路径

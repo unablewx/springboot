@@ -1,6 +1,5 @@
 package com.wx.service;
 
-import com.wx.pojo.Dept;
 import com.wx.pojo.Menu;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.wx.pojo.MenuVo;
@@ -52,5 +51,4 @@ public interface MenuService extends IService<Menu> {
      * @return
      */
     PageResp<List<MenuVo>> nodes();
-//    PageResp<List<Menu>> nodes();
 }

@@ -3,8 +3,7 @@ package com.wx.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
+import com.github.pagehelper.page.PageMethod;
 import com.wx.constant.Constant;
 import com.wx.mapper.RoleMenuMapper;
 import com.wx.pojo.Menu;
@@ -24,7 +23,6 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.annotation.Resource;
 import java.util.Date;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * @author 86134
@@ -44,13 +42,12 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role>
 
     @Override
     public PageResp<List<Role>> queryRoleList(int page, int limit, String roleNo, String roleName) {
-        PageHelper.startPage(page, limit);
+        PageMethod.startPage(page, limit);
         //查询数据
         List<Role> roles = mapper.selectListParams(roleNo, roleName);
-        PageInfo rolePage = new PageInfo(roles);
         //封装数据
         PageResp<List<Role>> listPage = new PageResp<>();
-        listPage.setCount(new Long(rolePage.getTotal()).intValue());
+        listPage.setCount(roles.size());
         listPage.setData(roles);
         //返回数据
         return listPage;
@@ -79,7 +76,7 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role>
         boolean outcome = removeById(ids);
         //删除角色菜单权限
         LambdaUpdateWrapper<RoleMenu> wrapper = new LambdaUpdateWrapper<>();
-        wrapper.eq(RoleMenu::getRoleId,ids);
+        wrapper.eq(RoleMenu::getRoleId, ids);
         roleMenuMapper.delete(wrapper);
         //返回结果
         return outcome ? Result.success() : Result.error();
@@ -108,7 +105,7 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role>
         wrapper.eq(RoleMenu::getRoleId, roleId);
         roleMenuMapper.delete(wrapper);
         //重新添加角色和菜单信息
-        if (menuIds != null && menuIds.size() != 0) {
+        if (!menuIds.isEmpty()) {
             int count = roleMenuMapper.insertBat(roleId, menuIds);
             return count == menuIds.size() ? Result.success() : Result.error();
         }

@@ -1,12 +1,10 @@
 package com.wx.controller;
 
 import com.wx.constant.Constant;
-import com.wx.pojo.Dept;
 import com.wx.pojo.Menu;
 import com.wx.pojo.MenuVo;
 import com.wx.resp.PageResp;
 import com.wx.resp.Result;
-import com.wx.service.DeptService;
 import com.wx.service.MenuService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -30,7 +28,6 @@ public class MenuController {
     @ApiOperation("显示部门列表,整个页面的左半部分")
     @GetMapping("menu")
     public PageResp<List<Menu>> queryMenuList() {
-//        return service.queryMenus();
         return service.initMenus();
     }
 

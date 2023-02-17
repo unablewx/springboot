@@ -2,7 +2,6 @@ package com.wx.service;
 
 import com.wx.pojo.Dept;
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.wx.pojo.Role;
 import com.wx.resp.PageResp;
 import com.wx.resp.Result;
 

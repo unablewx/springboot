@@ -2,10 +2,7 @@ package com.wx.utils;
 
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.*;
-import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 
 import java.io.Serializable;
 import java.util.List;
@@ -80,7 +77,8 @@ public class RedisUtils {
      */
     public void removePattern(final String pattern) {
         Set<Serializable> keys = redisTemplate.keys(pattern);
-        if (keys.size() > 0) {
+        assert keys != null;
+        if (!keys.isEmpty()) {
             redisTemplate.delete(keys);
         }
     }

@@ -2,7 +2,6 @@ package com.wx.controller;
 
 import com.wx.constant.Constant;
 import com.wx.pojo.Dept;
-import com.wx.pojo.Role;
 import com.wx.resp.PageResp;
 import com.wx.resp.Result;
 import com.wx.service.DeptService;

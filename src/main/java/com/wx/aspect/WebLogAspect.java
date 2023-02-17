@@ -31,8 +31,12 @@ public class WebLogAspect {
     @Before("logPrint()")
     public void doBefore(JoinPoint joinPoint) {
         ServletRequestAttributes requestAttributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+        //判断是否为空
+        if (requestAttributes == null) {
+            return;
+        }
         HttpServletRequest request = requestAttributes.getRequest();
-        log.info("请求地址：{}", request.getRequestURI().toString());
+        log.info("请求地址：{}", request.getRequestURI());
         log.info("请求类型：{}", request.getMethod());
         log.info("请求方法 METHOD：{},{}", joinPoint.getSignature().getDeclaringType(),
                 joinPoint.getSignature().getName());

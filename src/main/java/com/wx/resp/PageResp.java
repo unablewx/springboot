@@ -1,11 +1,9 @@
 package com.wx.resp;
 
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
 
 /**
  * @Author:Mr.Wang

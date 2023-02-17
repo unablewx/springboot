@@ -2,14 +2,10 @@ package com.wx.service.impl;
 
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
-import com.mysql.cj.util.StringUtils;
+import com.github.pagehelper.page.PageMethod;
 import com.wx.auth.AuthInfo;
 import com.wx.constant.Constant;
-import com.wx.mapper.RoleMapper;
 import com.wx.pojo.User;
 import com.wx.resp.LoginResp;
 import com.wx.resp.PageResp;
@@ -77,10 +73,9 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
     @Override
     public PageResp<List<User>> queryUserList(int page, int limit, String userName, String userMobile) {
-        PageHelper.startPage(page, limit);
+        PageMethod.startPage(page, limit);
         //查询数据
         List<User> users = userMapper.selectAllMutual(userName, userMobile);
-        PageInfo<User> userPageInfo = new PageInfo<>(users);
         //封装数据
         PageResp<List<User>> pageResp = new PageResp<>();
         pageResp.setCount(users.size());
@@ -88,6 +83,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         //返回数据
         return pageResp;
     }
+
 
     @Override
     public Result insertOrUpdate(User user) {

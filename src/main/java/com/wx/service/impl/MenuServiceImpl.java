@@ -44,9 +44,7 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu>
         wrapper.eq(RoleMenu::getRoleId, roleId);
         List<RoleMenu> roleMenus = roleMenuMapper.selectList(wrapper);
         //根据角色菜单数据查询菜单数据
-        roleMenus.forEach(roleMenu -> {
-            ids.add(roleMenu.getMenuId());
-        });
+        roleMenus.forEach(roleMenu -> ids.add(roleMenu.getMenuId()));
         List<Menu> menus = mapper.selectBatchIds(ids);
         //处理菜单数据
         menus = filter(menus);
@@ -76,7 +74,7 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu>
         List<Menu> sub = new ArrayList<>();
         HashMap<Long, Menu> parentMap = new HashMap<>();
         //1.找出子菜单数据
-        for (Menu menu:list) {
+        for (Menu menu : list) {
             if (menu.getPid() != null) {
                 sub.add(menu);
             } else {
@@ -93,10 +91,10 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu>
             parentMap.put(pid, parent);
         });
         //将主菜单排序
-        List<Menu> menus = parentMap.values().stream()
+
+        return parentMap.values().stream()
                 .sorted(Comparator.comparing(Menu::getOrderValue))
                 .collect(Collectors.toList());
-        return menus;
     }
 
 

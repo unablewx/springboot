@@ -6,15 +6,14 @@ package com.wx.config;
  * @Version 1.0
  */
 import java.lang.reflect.Method;
+
+import org.apache.commons.pool2.impl.GenericObjectPoolConfig;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.CachingConfigurerSupport;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.cache.interceptor.KeyGenerator;
-//import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.data.redis.cache.RedisCacheManager;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -23,7 +22,7 @@ import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.springframework.data.redis.serializer.StringRedisSerializer;
+import redis.clients.jedis.Jedis;
 
 @Configuration
 @EnableCaching
@@ -34,8 +33,6 @@ public class RedisConfig extends CachingConfigurerSupport{
     private int port;
     @Value("${spring.redis.connect-timeout}")
     private int timeout;
-//    @Value("${spring.redis.password}")
-//    private String password;
     @Value("${spring.redis.pool.max-active}")
     private int maxActive;
     @Value("${spring.redis.pool.max-wait}")
@@ -69,11 +66,12 @@ public class RedisConfig extends CachingConfigurerSupport{
         factory.setHostName(host);
         factory.setPort(port);
         factory.setTimeout(timeout); //设置连接超时时间
-//        factory.setPassword(password);
-        factory.getPoolConfig().setMaxIdle(maxIdle);
-        factory.getPoolConfig().setMinIdle(minIdle);
-        factory.getPoolConfig().setMaxTotal(maxActive);
-        factory.getPoolConfig().setMaxWaitMillis(maxWait);
+        GenericObjectPoolConfig<Jedis> poolConfig = factory.getPoolConfig();
+        if (poolConfig!=null){
+            poolConfig.setMinIdle(minIdle);
+            poolConfig.setMaxTotal(maxActive);
+            poolConfig.setMaxWaitMillis(maxWait);
+        }
         return factory;
     }
 

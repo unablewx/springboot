@@ -28,14 +28,11 @@ public class Result {
     //消息
     private String msg;
 
-    //返回的操作数据
-//    private Map<String, Object> data;
     public static Result success() {
         Result result = new Result();
         result.setSuccess(true)
                 .setStates(20000)
                 .setMsg("操作成功");
-//                .setData(new HashMap<>());
         return result;
     }
 
@@ -44,29 +41,6 @@ public class Result {
         result.setSuccess(false)
                 .setStates(20001)
                 .setMsg("操作失败");
-//                .setData(new HashMap<>());
         return result;
     }
-//    /**
-//     * 封装数据通过传递Map
-//     *
-//     * @param data 传递进来的封装数据的Map
-//     * @return Result
-//     */
-//    public Result setData(Map<String, Object> data) {
-//        this.data = data;
-//        return this;
-//    }
-//
-//    /**
-//     * 封装数据通过传递键值对
-//     *
-//     * @param key 传递进来的键
-//     * @param value 传递进来的值
-//     * @return Result
-//     */
-//    public Result setData(String key, Object value) {
-//        this.data.put(key, value);
-//        return this;
-//    }
 }

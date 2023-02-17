@@ -6,13 +6,11 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.mysql.cj.util.StringUtils;
 import com.wx.constant.Constant;
 import com.wx.pojo.Dept;
-import com.wx.pojo.Role;
 import com.wx.resp.PageResp;
 import com.wx.resp.Result;
 import com.wx.service.DeptService;
 import com.wx.mapper.DeptMapper;
 import org.slf4j.MDC;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -40,7 +38,7 @@ public class DeptServiceImpl extends ServiceImpl<DeptMapper, Dept>
         page(deptPage, wrapper);
         //封装数据
         PageResp<List<Dept>> listPage = new PageResp<>();
-        listPage.setCount(new Long(deptPage.getTotal()).intValue());
+        listPage.setCount((int) deptPage.getTotal());
         listPage.setData(deptPage.getRecords());
         //返回数据
         return listPage;

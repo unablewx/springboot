@@ -1,7 +1,6 @@
 package com.wx.auth;
 
 import com.wx.exception.CrmAuthException;
-import org.springframework.beans.factory.annotation.Value;
 
 /**
  * @Author:Mr.Wang

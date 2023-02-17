@@ -2,11 +2,8 @@ package com.wx.auth;
 
 import com.wx.exception.CrmAuthException;
 import com.wx.utils.JwtUtil;
-import com.wx.utils.RedisUtils;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-import java.util.Date;
 
 /**
  * @Author:Mr.Wang
