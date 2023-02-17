@@ -1,0 +1,58 @@
+#spring配置
+spring:
+  output:
+    ansi:
+      enabled: detect
+  datasource:
+    url: jdbc:mysql://localhost:3306/springboot?serverTimezone=GMT%2B8
+    username: root
+    password: wx
+  # 配置redis
+  redis:
+    port: 6379
+    host: 192.168.117.129
+    client-type: lettuce
+    pool:
+      max-active: 8
+      max-wait: -1
+      max-idle: 8
+      min-idle: 0
+    connect-timeout: 30000
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+#mybatis-plus配置
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  global-config:
+    db-config:
+      logic-delete-field: deleted
+      id-type: auto
+  type-aliases-package: com.wx.pojo
+# 配置 jwt 生成 token 的 secret
+jwt:
+  auth:
+    secret: 123456
+    expired: 86400000 #一天的时间 24*60*60*1000=86400000
+    default-password: 123
+    redis:
+      enable: false
+#打印日志配置
+#logging:
+##  config: classpath:logback-spring.xml
+#  pattern:
+#    # %d{HH:mm:ss.SSS}：日志输出时间。
+#    # %thread：输出日志的进程名，这在Web应用以及异步任务处理中很有用。
+#    # %-5level：日志级别，使用5个字符靠左对齐。
+#    # %logger-：日志输出者的名称。
+#    # %msg：日志消息。
+#    # %n：平台的换行符。
+#    console: "%green([%d{yyyy-MM-dd HH:mm:ss.SSS}]) %cyan(%thread) %highlight(%-5level) %magenta(%logger{36}) %yellow(%L) - %gray(%msg%n)"
+#    file: "%d{yyyy-MM-dd-HH:mm:ss} [%thread] %-5level %logger- %msg%n"
+#  level:
+#    # 指定整个项目的日志级别为 info
+#    root: info
+#  # 保存日志文件
+#  file:
+#    name: E:\Java\Decadactyl\springboot项目实战\springboot\log

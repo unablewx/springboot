@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wx.mapper.MenuMapper">
+
+    <resultMap id="BaseResultMap" type="com.wx.pojo.Menu">
+            <id property="id" column="id" jdbcType="BIGINT"/>
+            <result property="icon" column="icon" jdbcType="VARCHAR"/>
+            <result property="menuName" column="menu_name" jdbcType="VARCHAR"/>
+            <result property="hasThird" column="has_third" jdbcType="VARCHAR"/>
+            <result property="url" column="url" jdbcType="VARCHAR"/>
+            <result property="pid" column="pid" jdbcType="BIGINT"/>
+            <result property="orderValue" column="order_value" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,icon,menu_name,
+        has_third,url,pid,
+        order_value
+    </sql>
+    <delete id="deleteByIds">
+        delete from t_menu where id in #{ids} or pid in #{ids}
+    </delete>
+</mapper>

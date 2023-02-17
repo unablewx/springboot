@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wx.mapper.UserMapper">
+
+    <resultMap id="BaseResultMap" type="com.wx.pojo.User">
+        <result property="id" column="id" jdbcType="BIGINT"/>
+        <result property="userName" column="user_name" jdbcType="VARCHAR"/>
+        <result property="account" column="account" jdbcType="VARCHAR"/>
+        <result property="password" column="password" jdbcType="VARCHAR"/>
+        <result property="deptId" column="dept_id" jdbcType="BIGINT"/>
+        <result property="roleId" column="role_id" jdbcType="BIGINT"/>
+        <result property="userMobile" column="user_mobile" jdbcType="VARCHAR"/>
+        <result property="createUser" column="create_user" jdbcType="BIGINT"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="updateUser" column="update_user" jdbcType="BIGINT"/>
+        <result property="editTime" column="edit_time" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id
+        ,user_name,account,
+        password,dept_id,role_id,
+        user_mobile,create_user,create_time,
+        update_user,edit_time
+    </sql>
+    <select id="selectAllMutual" resultType="com.wx.pojo.User">
+        SELECT self.*, uUser.`user_name` AS editUserName,cUser.`user_name` AS createUserName,
+        role.`role_name` as roleName,dept.`dept_name` as deptName
+        FROM t_user self
+        LEFT JOIN t_user uUser ON self.`update_user` = uUser.`id`
+        LEFT JOIN t_user cUser ON self.`create_user` = cUser.`id`
+        LEFT JOIN t_role role ON self.`role_id` = role.`id`
+        LEFT JOIN t_dept dept ON self.`dept_id` = dept.`id`
+        <where>
+            <if test="userName != null and userName != ''">
+                r.`user_name` = #{userName}
+            </if>
+            <if test="userMobile != null and userMobile != ''">
+                and r.`user_mobile` = #{userMobile}
+            </if>
+        </where>
+    </select>
+</mapper>
